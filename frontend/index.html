@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>3D Model Viewer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://rawcdn.githack.com/AR-js-org/AR.js/3.3.2/aframe/build/aframe-ar.js"></script>
+  <style>
+    body { margin: 0; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <a-scene embedded arjs="sourceType: webcam;">
+    <a-assets id="model-assets">
+    </a-assets>
+    <a-marker preset="hiro">
+      <a-entity id="3d-model" position="0 0 0" scale="0.5 0.5 0.5"></a-entity>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+  <script>
+    async function loadModels() {
+      const response = await fetch('http://localhost:3000/models');
+      const models = await response.json();
+      const assets = document.getElementById('model-assets');
+      const modelEntity = document.getElementById('3d-model');
+
+      models.forEach(model => {
+        const assetItem = document.createElement('a-asset-item');
+        assetItem.setAttribute('id', model.name);
+        assetItem.setAttribute('src', `http://localhost:3000/${model.path}`);
+        assets.appendChild(assetItem);
+      });
+
+      if (models.length > 0) {
+        modelEntity.setAttribute('gltf-model', `#${models[0].name}`);
+      }
+    }
+
+    loadModels();
+  </script>
+</body>
+</html>
