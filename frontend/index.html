@@ -2,18 +2,16 @@
 <html>
 <head>
   <title>3D Model Viewer</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://rawcdn.githack.com/AR-js-org/AR.js/3.3.2/aframe/build/aframe-ar.js"></script>
+  <script src="https://rawcdn.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <style>
-    body { margin: 0; }
-    canvas { display: block; }
+    body { margin: 0; overflow: hidden; }
+    a-scene { height: 100vh; width: 100vw; }
   </style>
 </head>
 <body>
-  <a-scene embedded arjs="sourceType: webcam;">
-    <a-assets id="model-assets">
-    </a-assets>
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+    <a-assets id="model-assets"></a-assets>
     <a-marker preset="hiro">
       <a-entity id="3d-model" position="0 0 0" scale="0.5 0.5 0.5"></a-entity>
     </a-marker>
